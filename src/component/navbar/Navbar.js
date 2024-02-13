@@ -7,7 +7,7 @@ function Navbar() {
     let toggleNav = ()=>setNavVisibility(!isNavVisible);
     const hamburgerStyle = isNavVisible ? 'active' : '';
     const navStyle = {
-        display: isNavVisible ? "float" : "none"
+        display: isNavVisible ? "none" : "float"
     }
     return (
         <>

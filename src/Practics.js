@@ -266,3 +266,182 @@ function CarForm(){
 }
 const formRoot = ReactDOM.createRoot(document.getElementById('form-container'));
 formRoot.render(<CarForm />);
+
+// ---------------- Hooks -------------------
+import { useState } from 'react';
+
+function MenuComponent3() {
+    const [items, setItem] = useState([]);
+    let addItem = () => {
+        setItem([...items, {
+            id: items.length,
+            value: Math.floor(Math.random() * 10) + 1
+        }
+        ]);
+    }
+    return (
+        <>
+            <div className="col-6">
+                <button onClick={addItem}>Add items</button>
+            </div><br></br>
+
+            <div className='col-6'>
+                {items.map(item => <p key={item.id}>{item.value}</p>)}
+            </div>
+        </>
+    );
+}
+
+
+import { useState } from 'react';
+
+function MenuComponent2() {
+    const [name, setName] = useState({ first_name: "", last_name: "" });
+    return (
+        <>
+            <form>
+                <input type='text' onChange={(e) => setName({...name, first_name: e.target.value })} /><br />
+                <input type='text' onChange={(e) => setName({...name, last_name: e.target.value })} />
+            </form>
+            <p></p>
+            <div>
+                <p>First Name {name.first_name}</p>
+                <p>Last Name {name.last_name}</p>
+            </div>
+
+
+        </>
+    );
+}
+
+
+import {useState} from 'react';
+
+function MenuComponent(){
+    const [count,setCount] = useState(0);
+    const incCount = ()=>{
+        setCount((prevCount)=>{return prevCount+1});
+    }
+    return (
+        <>
+            <button onClick={incCount}>Count {count}</button>
+        </>
+    );
+}
+// --------------------------------------
+import React, { Component } from "react";
+
+class UseEffectClass extends React.Component
+{
+    constructor(){
+        super();
+        this.state = {
+            count:0
+        }
+    }
+    addCount = ()=>{
+        this.setState({
+            count:this.state.count+1
+        });
+        document.title = `Clicked ${this.state.count} Times`
+    }
+    componentDidMount(){
+        document.title = `Clicked ${this.state.count} Times`
+    }
+    componentDidUpdate(){
+        document.title = `Clicked ${this.state.count} Times`
+    }
+     render(){
+        return (
+            <>
+                <button onClick={this.addCount}>Count {this.state.count}</button>
+            </>
+        );
+     }
+}
+// ---------------------------------------
+import {useState, useEffect} from 'react';
+
+function UseEffectHook3(){
+    const[count,setCount] = useState(0);
+    const tick = ()=>{
+        setCount(prevCount => prevCount+1);
+    }
+
+    useEffect(()=>{
+        let timer = setInterval(tick,1000);
+        return ()=>{
+            clearInterval(timer);
+        }
+    },[])
+    return (
+        <>
+            {count}
+        </>
+    );
+}
+// --------------------------------------
+import { useEffect, useState } from "react";
+
+function UseEffectHook1() {
+    const [count, setCount] = useState(0);
+    const [name, setName] = useState('');
+    const addCount = () => setCount(count + 1);
+    useEffect(() => {
+        console.log("updating document title");
+        document.title = `Clicked ${count} Times`
+    },[count]);
+    return (
+        <>
+            <div>
+                <button onClick={addCount}>Add Count {count}</button>
+                <br></br>
+                <input type='text' value={name} onChange={(e) => setName(e.target.value)} />
+            </div>
+        </>
+    );
+}
+export default UseEffectHook1;
+// --------------------------------------
+import { useEffect, useState } from "react";
+function UseEffectHook2(){
+    const[x,setX] = useState(0);
+    const[y,setY] = useState(0);
+
+    let logMouseHover = (e)=>{
+        setX(e.clientX);
+        setY(e.clientY);
+        console.log("Event Called");
+    }
+    useEffect(()=>{
+        console.log("use effect called");
+        window.addEventListener('mousemove',logMouseHover);
+        return ()=>{
+            console.log('component unmounting code');
+            window.removeEventListener('mousemove',logMouseHover);
+
+        }
+    },[])
+    return (
+        <>
+            <p>X: {x}</p>
+            <p>Y: {y}</p>
+        </>
+    );
+}
+// --------------------------------------
+import {useState} from 'react';
+import UseEffectHook2 from "./UseEffectHook2";
+
+function UseEffectToggleHook2(){
+    const [display,setDisplay] = useState(true);
+    return (
+        <>
+            <button onClick={()=>setDisplay(!display)}>Toogle Display</button>
+            {display && <UseEffectHook2/>}
+        </>
+    );
+}
+// --------------------------------------
+// --------------------------------------
+// --------------------------------------
