@@ -1,10 +1,8 @@
-import MenuList from "../../component/menu/MenuList";
-import Navbar from "../../component/navbar/Navbar";
-import "../../component/menu/Menu.css"
+import MenuList from "../../component/pages/menu/MenuList";
+import "../../component/pages/menu/Menu.css"
 function Menu() {
     return (
         <>
-            <Navbar />
             <div className="container-fluid">
                 <div className="row justify-content-center">
                     <h4>Menu Page</h4>

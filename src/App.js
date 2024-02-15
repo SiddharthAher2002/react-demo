@@ -6,19 +6,24 @@ import Registration from './pages/auth/Registration';
 import Home from "./pages/frontend/Home";
 import Menu from "./pages/frontend/Menu";
 import Posts from './pages/frontend/Posts';
+import About from './pages/frontend/About';
 
 function App() {
   return (
+    
     <BrowserRouter>
       <Routes>
+
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />}/>
           <Route path="menu" element={<Menu />}/>
           <Route path="posts" element={<Posts />}/>
+          <Route path='about' element = {<About/>} />
+          
         </Route>
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Registration />}/>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Registration />}/>
       </Routes>
     </BrowserRouter>
   );

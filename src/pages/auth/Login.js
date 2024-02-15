@@ -2,6 +2,9 @@ import {Link} from "react-router-dom";
 import './Auth.css';
 
 function Login() {
+
+
+
     return (
         <>
             <div className="container mt-5">
@@ -31,6 +34,7 @@ function Login() {
                                 </div>
 
                                 <button className="btn btn-primary btn-block" type="submit">Sign in</button>
+                                
                                 <div className="form-group d-flex justify-content-between">
                                     <a href="#"><h6>Forget Password</h6></a>
                                     <Link to="/register"><h6>Resgister</h6></Link>

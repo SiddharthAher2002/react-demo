@@ -442,6 +442,58 @@ function UseEffectToggleHook2(){
         </>
     );
 }
-// --------------------------------------
+// ------------------ UseContext Hooks --------------------
+
+import React from 'react';
+import Child1 from './Child1';
+
+export const UserContext = React.createContext();
+export const ItemContext = React.createContext();
+
+function ContextHook1() {
+    return (
+        <>
+            <UserContext.Provider value="user1">
+                <ItemContext.Provider value="item1">
+                    <Child1 />
+                </ItemContext.Provider>
+            </UserContext.Provider>
+
+        </>
+    );
+}
+
+import React, {useContext} from 'react';
+import { ItemContext,UserContext } from './ContextHook1';
+
+
+function Child3(){
+    return (
+        <>
+            <div className='col-12'>
+               <UserContext.Consumer>
+                {
+                    user => {
+                        return (
+                           <ItemContext.Consumer>
+                            {
+                                item =>{
+                                    return(
+                                            <>
+                                                UserContext :{user},
+                                                ItemContext : {item}
+                                            </>
+                                    );
+                                }
+                            }
+                           </ItemContext.Consumer>
+                        );
+                    }
+                }
+               </UserContext.Consumer>
+            </div>
+        </>
+    );
+}
 // --------------------------------------
 // --------------------------------------

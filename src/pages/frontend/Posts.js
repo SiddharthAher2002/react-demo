@@ -1,7 +1,6 @@
-import Navbar from "../../component/navbar/Navbar";
-import PostList from "../../component/posts/PostList";
-import PostForm from "../../component/posts/PostForm";
-import PostDetailForm  from "../../component/posts/PostDetailForm";
+import PostList from "../../component/pages/posts/PostList";
+import PostForm from "../../component/pages/posts/PostForm";
+import PostDetailForm  from "../../component/pages/posts/PostDetailForm";
 
 function Posts() {
     const postListStyle = {
@@ -11,7 +10,6 @@ function Posts() {
     }
     return (
         <>
-            <Navbar />
             <div className="container">
                 <div className="row justify-content-center">
                     <h4 className="col-2">POSTS</h4>

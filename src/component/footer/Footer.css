@@ -1,0 +1,31 @@
+/* ==========================================
+    FOR DEMO PURPOSE
+  ========================================== */
+
+  .text-small {
+    font-size: 0.9rem;
+  }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  
+  a:hover, a:focus {
+    text-decoration: none;
+  }
+  
+  .form-control {
+    background: #e6f1fb;
+    border-color: #e6f1fb;
+  }
+  
+  .form-control:focus {
+    background: #e6f1fb;
+  }
+  
+  footer {
+    background: #e6f1fb;
+  }
+  
