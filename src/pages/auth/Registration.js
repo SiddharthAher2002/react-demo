@@ -10,7 +10,7 @@ function Registration() {
                             <Link to="/">
                                 <img src="https://marketplace.canva.com/EAEyrxfbXiY/6/0/1600w/canva-brown-vintage-coffee-shop-logo-h09r2PsrZno.jpg" style={{ width: '100px' }} alt="Scanfcode" />
                             </Link>
-                            <h1>Register to chase cafffe</h1>
+                            <h1>Register</h1>
 
                             <form method="" action="">
                                 <div className="form-group">

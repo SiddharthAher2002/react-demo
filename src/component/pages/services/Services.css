@@ -1,0 +1,10 @@
+.services .nav-link.active{
+    color:rgb(0, 110, 220)
+}
+/* Comments component */
+.comments-section{
+    margin-top: 20px;
+    overflow-y: scroll;
+    height: 500px;
+    margin: auto;
+}

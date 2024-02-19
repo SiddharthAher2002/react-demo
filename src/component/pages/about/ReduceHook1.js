@@ -1,30 +1,36 @@
 import { useReducer } from "react";
 
 function ReduceHook1(){
-    const initialState = {
-        firstCounter:0
-    };
-    const reducer = (state,action)=>{
+    const initalState = 0;
+    const reducer = (currState,action)=>{
+        let newState;
         switch(action){
             case 'increment':
-                return {firstCounter: state.firstCounter+1};
+                newState= currState+1;
+                break;
             case 'decrement':
-                return {firstCounter: state.firstCounter-1};
+                newState = currState-1;
+                break;
             case 'reset':
-                return {firstCounter: initialState.firstCounter};
+                newState = initalState;
+                break;
             default:
-                return state.firstCounter;
+                return currState;
         }
+        return newState;
     };
 
-    const[count,dispatch] = useReducer(reducer,initialState)
+    const [state,dispatch] = useReducer(reducer,initalState);
     return (
         <>
-            <div>Count: {count.firstCounter}</div>
-            <button className="btn btn-outline-dark m-1" onClick={()=>dispatch('increment')}>increment</button>
-            <button className="btn btn-outline-dark m-1" onClick={()=>dispatch('decrement')}>decrement</button>
-            <button className="btn btn-outline-dark m-1" onClick={()=>dispatch('reset')}>rest</button>
+            <div >State : {state}</div>
+            <div >
+                <button onClick={()=>dispatch('increment')} className="btn btn-outline-secondary m-2">Inc</button>
+                <button onClick={()=>dispatch('decrement')} className="btn btn-outline-secondary m-2">Dec</button>
+                <button onClick={()=>dispatch('reset')} className="btn btn-outline-secondary m-2">Res</button>
+            </div>
         </>
     );
+
 }
 export default ReduceHook1;

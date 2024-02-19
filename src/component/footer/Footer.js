@@ -2,7 +2,7 @@ import "./Footer.css"
 function Footer() {
     return (
         <>
-            <div className="container-fluid d-flex flex-column h-100">
+            <div className="container-fluid d-flex flex-column h-100 p-0">
                 <footer className="w-100 py-4 flex-shrink-0 mt-5">
                     <div className="container py-4">
                         <div className="row gy-4 gx-5">

@@ -19,7 +19,7 @@ function Navbar() {
                     <h3 className="ml-3 d-flex justify-content-center protest-revolution-regular ">Chase the Coffee</h3>
                     <div className="navbarNav collapse navbar-collapse justify-content-end" id="navbarNav">
                         <ul className="navbar-nav mr-4" style={navStyle}>
-                            <li className="nav-item active">
+                            <li className="nav-item">
                                 <Link className="nav-link" to="/">Home</Link>
                             </li>
                             <li className="nav-item">
@@ -29,7 +29,7 @@ function Navbar() {
                                 <Link className="nav-link" to="/menu">Menu</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">Services</Link>
+                                <Link className="nav-link" to="/services">Services</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/posts">Posts</Link>

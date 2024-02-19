@@ -1,5 +1,6 @@
 import {Link,useNavigate} from "react-router-dom";
 import { useContext, useState } from "react";
+import axios from "axios";
 import './Auth.css';
 import { LoginContext } from "../../context/auth/LoginContext";
 
@@ -8,13 +9,29 @@ function Login() {
 
     const [userEmail,setUserEmail] = useState('');
     const [userPassword, setUserPass] = useState('');
-
-    const {setUser} = useContext(LoginContext) ;
+    const [error, setError] = useState('');
+    const {setUser,setLoginStatus} = useContext(LoginContext) ;
+    
     const handleSubmit = (e)=>{
         e.preventDefault();
-        setUser({userEmail,userPassword});
-        navigate("/profile");
+        axios.get(`https://jsonplaceholder.typicode.com/users?email=${userEmail}`)
+        .then((res) => {
+            const userData = res.data[0];
+      
+            if (userData) {
+              setUser(userData);
+              setLoginStatus(true);
+              navigate("/profile/account");
+            } else {
+              setError('Email is not valid');
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        
     };
+    
     return (
         <>
             <div className="container mt-5">
@@ -59,6 +76,7 @@ function Login() {
                                     <a href="#"><h6>Forget Password</h6></a>
                                     <Link to="/register"><h6>Resgister</h6></Link>
                                 </div>
+                                <span className="text-danger">{error}</span>
                                 <div className="login-footer">
                                     <h6>Login with following options</h6>
                                     <ul className="social-icons">
@@ -71,7 +89,6 @@ function Login() {
                     </div>
                 </div>
             </div>
-
         </>
     );
 }
