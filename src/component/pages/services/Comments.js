@@ -12,7 +12,7 @@ const reducer = (currState, action) => {
         case "FETCH_SUCCESS":
             return {
                 isLoading: false,
-                data: Array.isArray(currState.data) ? [...currState.data, ...action.data] : action.data,
+                data: action.data,
                 error: '',
             }
         case "FETCH_FAIL":
@@ -29,11 +29,9 @@ function Comments() {
     const [comments, dispatch] = useReducer(reducer, initialState)
 
     const [currPageId, setCurrPageId] = useState(0);
-    const [fetchData, setFetchData] = useState(comments.data);
-
+    const [htmlContent, setHtmlContent] = useState('');
     const limitPerPage = 10;
     const handleLoadMore = () => {
-        setFetchData(comments.data);
         setCurrPageId(PreviousPageID => PreviousPageID + 10);
     }
     useEffect(() => {
@@ -46,11 +44,19 @@ function Comments() {
             });
     }, [currPageId]);
 
+    useEffect(() => {
+        if (comments.data.length > 0) {
+            setHtmlContent((previousHtml) => [...previousHtml, commentsHtml(comments)]);
+        }else{
+
+        }
+    }, [comments]);
+
     return (
         <div className="container">
             <div className="row">
                 <div className="col-10  p-3 comments-section">
-                    {commentsHtml(comments)}
+                    {htmlContent}
                 </div>
             </div>
 
@@ -67,25 +73,23 @@ function Comments() {
 }
 
 function commentsHtml(comments) {
-    return (<div>
-        {
-            Array.isArray(comments.data) && comments.data.map((comment) => {
-                return (<div className="m-3" key={comment.id}>
-                    <div className="card">
-                        <div className="card-header bg-secondary text-light">
-                            <h6>{comment.email}</h6>
-                        </div>
-                        <div className="card-body">
-                            <h4>{comment.name}</h4>
-                            <p>{comment.body}</p>
-                        </div>
-                        <div className="card-footer">
-                            <p style={{ fontSize: "12px" }}>19th Feb 2024: 08 PM</p>
-                        </div>
+    return (
+        Array.isArray(comments.data) && comments.data.map((comment) => {
+            return (<div className="m-3" key={comment.id}>
+                <div className="card">
+                    <div className="card-header bg-secondary text-light">
+                        <h6>{comment.email}</h6>
                     </div>
-                </div>)
-            })
-        }
-    </div>);
+                    <div className="card-body">
+                        <h4>{comment.name}</h4>
+                        <p>{comment.body}</p>
+                    </div>
+                    <div className="card-footer">
+                        <p style={{ fontSize: "12px" }}>19th Feb 2024: 08 PM : {comment.id}</p>
+                    </div>
+                </div>
+            </div>)
+        })
+    );
 }
 export default Comments;

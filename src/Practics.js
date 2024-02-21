@@ -495,5 +495,183 @@ function Child3(){
         </>
     );
 }
+// ------------------USER REDUCER --------------------
+import { useReducer } from "react";
+
+function ReduceHook1(){
+    const initalState = 0;
+    const reducer = (currState,action)=>{
+        let newState;
+        switch(action){
+            case 'increment':
+                newState= currState+1;
+                break;
+            case 'decrement':
+                newState = currState-1;
+                break;
+            case 'reset':
+                newState = initalState;
+                break;
+            default:
+                return currState;
+        }
+        return newState;
+    };
+
+    const [state,dispatch] = useReducer(reducer,initalState);
+    return (
+        <>
+            <div >State : {state}</div>
+            <div >
+                <button onClick={()=>dispatch('increment')} className="btn btn-outline-secondary m-2">Inc</button>
+                <button onClick={()=>dispatch('decrement')} className="btn btn-outline-secondary m-2">Dec</button>
+                <button onClick={()=>dispatch('reset')} className="btn btn-outline-secondary m-2">Res</button>
+            </div>
+        </>
+    );
+
+}
 // --------------------------------------
-// --------------------------------------
+import React, { useReducer } from "react";
+
+function ReduceHook2() {
+    const initalState = {
+        firstCounter: 0,
+        secondCounter: 0
+    };
+
+    const reducer = (currState, action) => {
+        switch (action.type) {
+            case 'inc':
+                return { ...currState, firstCounter: currState.firstCounter + action.value }
+            case 'dec':
+                return { ...currState, firstCounter: currState.firstCounter - action.value }
+            case 'inc5':
+                return { ...currState, firstCounter: currState.firstCounter + action.value }
+            case 'incSec':
+                return { ...currState, secondCounter: currState.secondCounter + action.value }
+            case 'decSec':
+                return { ...currState, secondCounter: currState.secondCounter - action.value }
+            case 'res':
+                return initalState
+        };
+
+
+    }
+    const [state, dispatch] = useReducer(reducer, initalState);
+    const [stateTwo, dispatchTwo] = useReducer(reducer, initalState);
+
+    return (
+        <div className="container">
+            <div className="row justify-content-center">First State : {state.firstCounter}</div>
+            <div className="row justify-content-center" >
+                <button onClick={() => dispatch({ type: 'inc', value: 1 })} className="btn btn-outline-secondary m-2">Inc</button>
+                <button onClick={() => dispatch({ type: 'dec', value: 1 })} className="btn btn-outline-secondary m-2">Dec</button>
+                <button onClick={() => dispatch({ type: 'inc5', value: 5 })} className="btn btn-outline-secondary m-2">Inc 5</button>
+                <button onClick={() => dispatch({ type: 'res' })} className="btn btn-outline-secondary m-2">Res</button>
+            </div>
+            <div className="row justify-content-center">Second State : {state.secondCounter}</div>
+            <div className="row justify-content-center" >
+                <button onClick={() => dispatch({ type: 'incSec', value: 1 })} className="btn btn-outline-secondary m-2">IncSec</button>
+                <button onClick={() => dispatch({ type: 'decSec', value: 1 })} className="btn btn-outline-secondary m-2">DecSec</button>
+                <button onClick={() => dispatch({ type: 'res' })} className="btn btn-outline-secondary m-2">Res</button>
+            </div>
+
+            <div className="row justify-content-center">Second Reducer State : {stateTwo.firstCounter}</div>
+            <div className="row justify-content-center" >
+                <button onClick={() => dispatchTwo({ type: 'inc', value: 1 })} className="btn btn-outline-secondary m-2">Inc</button>
+                <button onClick={() => dispatchTwo({ type: 'dec', value: 1 })} className="btn btn-outline-secondary m-2">Dec</button>
+                <button onClick={() => dispatchTwo({ type: 'res' })} className="btn btn-outline-secondary m-2">Res</button>
+            </div>
+        </div>
+
+    );
+}
+// -------------------------------------
+import { useReducer,useState } from "react";
+
+const initialState = {
+    firstStmt:0,
+    SecondStmt:0
+}
+const reducer = (currState,action)=>{
+    switch(action.operation){
+        case 'add':
+            return {firstStmt: parseInt(action.value1) + parseInt(action.value2) }
+        case 'sub': 
+            return {firstStmt: action.value1 - action.value2 }
+        case 'reset':
+            return initialState;
+        default:
+            return currState;
+    }
+}
+//------------------------------
+function ReduceHook3(){
+    const [firstValue , setFirst] = useState(0);
+    const [secondValue, setSecond] = useState(0);
+    const [calc1,dispatch1] = useReducer(reducer,initialState);
+    const [calc2,dispatch2] = useReducer(reducer,initialState);
+    return (
+        <div className="container">
+            <div className="row justify-content-center">{calc1.firstStmt}</div>
+            <div className="row justify-content-center">
+                <input type="text" placeholder="value 1" onChange={(e)=>setFirst(e.target.value)} value={firstValue}/>
+                
+                <input type="text" placeholder="value 2" onChange={(e)=>setSecond(e.target.value)} value={secondValue}/>
+            </div>
+            <div className="row justify-content-center">
+                <button className="btn btn-outline-dark m-2" onClick={()=>dispatch1({operation:'add',value1:firstValue, value2:secondValue})}>ADD</button>
+                <button className="btn btn-outline-dark m-2" onClick={()=>dispatch1({operation:'sub',value1:firstValue, value2:secondValue})}>Sub</button>
+                <button className="btn btn-outline-dark m-2" onClick={()=>dispatch1({operation:'reset'})}>Reset</button>
+            </div>
+            
+        </div>
+    );
+}
+
+//----------------------------------------------------------
+
+function ReduceHook4(){
+  const [user,dispatch] = useReducer(reducer,initialState);
+  useEffect(()=>{
+      axios.get('https://jsonplaceholder.typicode.com/usrs/1')
+      .then((res)=>{
+          dispatch({type:'FETCH_SUCCESS',payload:res.data})
+      })
+      .catch((err)=>{
+          dispatch({type:'FETCH_FAIL',payload:err.message})
+      })
+  },[])
+  return (
+      <>
+          {user.isLoading ? null : user.data.name}
+          {user.err!='' && user.err}
+      </>
+  );
+}
+// function ReduceHook4(){
+//     const [loading,setLoading] = useState(true);
+//     const [user,setUser] = useState({});
+//     const [err,setErr] = useState('');
+
+//     useEffect(()=>{
+//         axios.get("https://jsonplaceholder.typicode.com/sers/1")
+//         .then((res)=>{
+//             setLoading(false);
+//             setUser(res.data);
+//             setErr('');
+//         })
+//         .catch((err)=>{
+//             setLoading(false);
+//             setErr(err);
+//         })
+//     },[]);
+//     return (
+//         <>
+//             {loading ? null:user.name}
+//             {err!='' && err.message}
+//         </>
+//     );
+// }
+//---------------------------------------------------

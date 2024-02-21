@@ -1,4 +1,4 @@
-import {Link,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import axios from "axios";
 import './Auth.css';
@@ -6,32 +6,49 @@ import { LoginContext } from "../../context/auth/LoginContext";
 
 function Login() {
     const navigate = useNavigate();
-
-    const [userEmail,setUserEmail] = useState('');
-    const [userPassword, setUserPass] = useState('');
+    const [credentials, setCredentials] = useState({
+        email: '',
+        password: ''
+    })
     const [error, setError] = useState('');
-    const {setUser,setLoginStatus} = useContext(LoginContext) ;
-    
-    const handleSubmit = (e)=>{
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     axios.get(`https://jsonplaceholder.typicode.com/users?email=${userEmail}`)
+    //         .then((res) => {
+    //             const userData = res.data[0];
+    //             if (userData) {
+    //                 localStorage.setItem('user',JSON.stringify(userData));
+    //                 localStorage.setItem('isLoggedIn',true);
+    //                 navigate("/profile/account");
+    //             } else {
+    //                 setError('Email is not valid');
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         });
+
+    // };
+    const handleSubmit = (e) => {
         e.preventDefault();
-        axios.get(`https://jsonplaceholder.typicode.com/users?email=${userEmail}`)
-        .then((res) => {
-            const userData = res.data[0];
-      
-            if (userData) {
-              setUser(userData);
-              setLoginStatus(true);
-              navigate("/profile/account");
-            } else {
-              setError('Email is not valid');
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-        
-    };
-    
+        axios.post('http://127.0.0.1:8000/api/v1/auth/login', credentials)
+            .then((res) => {
+                const userData = res.data;
+                if (userData.data.length == 0) {
+                    setError('Invalid Credentials');
+                } else {
+                    localStorage.setItem('user', JSON.stringify(userData.data));
+                    localStorage.setItem('isLoggedIn', true);
+                    navigate("/profile/account");
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        console.log("three");
+    }
+
     return (
         <>
             <div className="container mt-5">
@@ -48,8 +65,13 @@ function Login() {
                                     <div className="input-group">
                                         <span className="input-group-addon"><i className="fa fa-envelope ti-email"></i></span>
                                         <input type="text" className="form-control" name="email" placeholder="Enter email"
-                                        value={userEmail}
-                                        onChange={(e)=>{setUserEmail(e.target.value)}}
+                                            value={credentials.email}
+                                            onChange={(e) => {
+                                                setCredentials({
+                                                    ...credentials,
+                                                    email: e.target.value
+                                                })
+                                            }}
                                         />
                                     </div>
                                 </div>
@@ -59,19 +81,24 @@ function Login() {
                                 <div className="form-group">
                                     <div className="input-group">
                                         <span className="input-group-addon"><i className="fa fa-lock ti-unlock"></i></span>
-                                        <input type="password" className="form-control" name="password" placeholder="Enter password" 
-                                        value={userPassword}
-                                        onChange={(e)=>{setUserPass(e.target.value)}}
+                                        <input type="password" className="form-control" name="password" placeholder="Enter password"
+                                            value={credentials.password}
+                                            onChange={(e) => {
+                                                setCredentials({
+                                                    ...credentials,
+                                                    password: e.target.value
+                                                })
+                                            }}
                                         />
                                     </div>
                                 </div>
 
-                                <button 
-                                className="btn btn-primary btn-block" 
-                                type="submit"
-                                onClick={handleSubmit}
+                                <button
+                                    className="btn btn-primary btn-block"
+                                    type="submit"
+                                    onClick={handleSubmit}
                                 >Sign in</button>
-                                
+
                                 <div className="form-group d-flex justify-content-between">
                                     <a href="#"><h6>Forget Password</h6></a>
                                     <Link to="/register"><h6>Resgister</h6></Link>

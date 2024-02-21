@@ -1,8 +1,20 @@
-import { useContext } from "react";
-import { LoginContext } from "../../../context/auth/LoginContext";
+import React, { useEffect } from "react";
+import { useState } from "react";
 
 function MyAccount() {
-    const { user } = useContext(LoginContext);
+
+    const [userData,setUserData] = useState({});
+    
+    const userLocalData= JSON.parse(localStorage.getItem('user'));
+
+    useEffect(()=>{
+        
+        if(userLocalData!=null){
+            setUserData(userLocalData);
+            
+        }
+    },[])
+    
     return (
         <div className="container">
             <div className="row m-2">
@@ -12,9 +24,10 @@ function MyAccount() {
                             <h6>User Details</h6>
                         </div>
                         <div className="card-body" style={{ minHeight: '170px' }}>
-                            <span>User name : {user.name}</span><br />
-                            <span>Email : {user.email}</span><br />
-                            <span>Contact : {user.phone}</span><br />
+                            <span>First name : {userData.first_name}</span><br />
+                            <span>Last name : {userData.last_name}</span><br />
+                            <span>Email : {userData.email}</span><br />
+                            <span>Contact : {userData.contact}</span><br />
                             <br />
 
                         </div>
@@ -50,16 +63,7 @@ function MyAccount() {
                         </div>
                         <div className="card-body" style={{ minHeight: '170px' }}>
 
-                            { user.address &&
-                                <>
-                                    <span>Location : {user.address.street}</span><br />
-                                    <span>City : {user.address.city} </span><br />
-                                    <span>State :  </span><br />
-                                    <span>Country :  </span><br />
-                                    <span>Pin : {user.address.zipcode} </span><br />
-
-                                </>
-                            }
+                    
 
                         </div>
                         <div className="card-footer d-flex">

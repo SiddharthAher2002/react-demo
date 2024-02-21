@@ -1,7 +1,4 @@
-import ReduceHook1 from "../../component/pages/about/ReduceHook1";
-import ReduceHook2 from '../../component/pages/about/ReduceHook2';
-import ReduceHook3 from "../../component/pages/about/ReduceHook3";
-import ReduceHook4 from "../../component/pages/about/ReduceHook4";
+import Axios from "../../component/pages/about/AxiosPost";
 function About(){
     return (
         <>
@@ -10,7 +7,7 @@ function About(){
                     <h4>About Page</h4>
                 </div>
                 <div className="row justify-content-center">
-                    <ReduceHook4/>
+                    <Axios/>
                 </div>
             </div>
         </>
