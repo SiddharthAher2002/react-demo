@@ -32,6 +32,7 @@ function Login() {
     // };
     const handleSubmit = (e) => {
         e.preventDefault();
+        
         axios.post('http://127.0.0.1:8000/api/v1/auth/login', credentials)
             .then((res) => {
                 const userData = res.data;
@@ -44,7 +45,10 @@ function Login() {
                 }
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error.response.status);
+                if(error.response.status){
+                    setError('Email not registered');
+                }
             });
         console.log("three");
     }
