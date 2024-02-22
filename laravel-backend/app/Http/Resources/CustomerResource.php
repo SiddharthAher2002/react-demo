@@ -14,6 +14,7 @@ class CustomerResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        $data = $request->post();
+        return ['data'=>$data];
     }
 }

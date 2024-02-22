@@ -5,6 +5,7 @@ import MenuCard from "./MenuCard";
 const MenuList = () => {
 
     const [menu, setMenu] = useState([]);
+    const [error, setError] = useState('');
     const [id, setId] = useState('');
     const [searchId, setSearchId] = useState('');
 
@@ -21,9 +22,10 @@ const MenuList = () => {
         axios.get(`https://api.sampleapis.com/coffee/hot/${searchId}`)
             .then((res) => {
                 setMenu(res.data);
+                setError('');
             })
             .catch((error) => {
-                console.log(error);
+                setError("Something went wrong please try again later!")
             });
     }, [searchId]);
 
@@ -48,6 +50,9 @@ const MenuList = () => {
                         :
                         <MenuCard key={menu.id} item={menu} />
                 }
+            </div>
+            <div className="row justify-content-center text-danger">
+                {error}
             </div>
         </div>
     );

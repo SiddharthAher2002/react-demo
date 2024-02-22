@@ -17,7 +17,6 @@ function Login() {
         axios.post('http://127.0.0.1:8000/api/v1/login', credentials)
             .then((res) => {
                 const userData = res.data;
-                console.log(userData);
                 if (userData.status=='401') {
                     setError(userData.error);
                 } else if(userData.status=='200') {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Http\Resources\CustomerResource;
 class CustomerController extends Controller
 {
     /**
@@ -20,7 +20,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return new CustomerResource($request);
     }
 
     /**
