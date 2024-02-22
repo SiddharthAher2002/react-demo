@@ -11,46 +11,29 @@ function Login() {
         password: ''
     })
     const [error, setError] = useState('');
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     axios.get(`https://jsonplaceholder.typicode.com/users?email=${userEmail}`)
-    //         .then((res) => {
-    //             const userData = res.data[0];
-    //             if (userData) {
-    //                 localStorage.setItem('user',JSON.stringify(userData));
-    //                 localStorage.setItem('isLoggedIn',true);
-    //                 navigate("/profile/account");
-    //             } else {
-    //                 setError('Email is not valid');
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-
-    // };
+    
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        axios.post('http://127.0.0.1:8000/api/v1/auth/login', credentials)
+        axios.post('http://127.0.0.1:8000/api/v1/login', credentials)
             .then((res) => {
                 const userData = res.data;
-                if (userData.data.length == 0) {
-                    setError('Invalid Credentials');
-                } else {
+                console.log(userData);
+                if (userData.status=='401') {
+                    setError(userData.error);
+                } else if(userData.status=='200') {
                     localStorage.setItem('user', JSON.stringify(userData.data));
                     localStorage.setItem('isLoggedIn', true);
+                    setError('');
                     navigate("/profile/account");
+                }else{
+                    setError(userData.error);
                 }
             })
             .catch((error) => {
-                console.log(error.response.status);
-                if(error.response.status){
-                    setError('Email not registered');
+                if(error){
+                    setError('Something went wrong! please try again later');
                 }
             });
-        console.log("three");
     }
 
     return (
