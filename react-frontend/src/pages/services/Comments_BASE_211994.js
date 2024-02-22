@@ -1,14 +1,9 @@
 import { useEffect, useReducer, useState } from "react";
 import axios from "axios";
-<<<<<<< HEAD:react-frontend/src/pages/services/Comments.js
-import CommentsCard from "./CommentsCard";
-=======
-import Comment from './Comment';
->>>>>>> daba3bd206f317c429c759b1edbec1167cb2c0fc:react-frontend/src/component/pages/services/Comments.js
 
 const initialState = {
     isLoading: true,
-    data: [],
+    data: {},
     error: ''
 }
 const reducer = (currState, action) => {
@@ -32,43 +27,36 @@ const reducer = (currState, action) => {
 };
 function Comments() {
     const [comments, dispatch] = useReducer(reducer, initialState)
+
     const [currPageId, setCurrPageId] = useState(0);
+    const [htmlContent, setHtmlContent] = useState('');
     const limitPerPage = 10;
     const handleLoadMore = () => {
-        let pageNum = PreviousPageID => PreviousPageID + 10
-        setCurrPageId(pageNum);
+        setCurrPageId(PreviousPageID => PreviousPageID + 10);
     }
-    
     useEffect(() => {
         axios.get(`https://jsonplaceholder.typicode.com/comments?_start=${currPageId}&_limit=${limitPerPage}`)
-<<<<<<< HEAD:react-frontend/src/pages/services/Comments.js
             .then((res) => {
-                console.log("called");
-                dispatch({ type: "FETCH_SUCCESS", data: [...comments.data,...res.data] });
+                dispatch({ type: "FETCH_SUCCESS", data: res.data });
             })
             .catch((error) => {
                 dispatch({ type: "FETCH_FAIL" });
             });
-            console.log(comments.data);
-    }, [currPageId]);
-=======
-            .then(res => dispatch({ type: "FETCH_SUCCESS", data: [...comments.data, ...res.data] }))
-            .catch(() => dispatch({ type: "FETCH_FAIL" }));
     }, [currPageId]);
 
->>>>>>> daba3bd206f317c429c759b1edbec1167cb2c0fc:react-frontend/src/component/pages/services/Comments.js
+    useEffect(() => {
+        if (comments.data.length > 0) {
+            setHtmlContent((previousHtml) => [...previousHtml, commentsHtml(comments)]);
+        }else{
+
+        }
+    }, [comments]);
+
     return (
-        
         <div className="container">
             <div className="row">
                 <div className="col-10  p-3 comments-section">
-<<<<<<< HEAD:react-frontend/src/pages/services/Comments.js
-                    {
-                        comments.data.map((comment) => <CommentsCard key={comment.id} comment={comment} />)
-                    }
-=======
-                    {comments.data.map((comment, i) => <Comment comment={comment} />)}
->>>>>>> daba3bd206f317c429c759b1edbec1167cb2c0fc:react-frontend/src/component/pages/services/Comments.js
+                    {htmlContent}
                 </div>
             </div>
 
@@ -77,12 +65,31 @@ function Comments() {
                     <button onClick={handleLoadMore} className="btn btn-outline-dark" disabled={false}>Load More</button>
                 </div>
             </div>
+
+
         </div>
 
     );
 }
-<<<<<<< HEAD:react-frontend/src/pages/services/Comments.js
 
-=======
->>>>>>> daba3bd206f317c429c759b1edbec1167cb2c0fc:react-frontend/src/component/pages/services/Comments.js
+function commentsHtml(comments) {
+    return (
+        Array.isArray(comments.data) && comments.data.map((comment) => {
+            return (<div className="m-3" key={comment.id}>
+                <div className="card">
+                    <div className="card-header bg-secondary text-light">
+                        <h6>{comment.email}</h6>
+                    </div>
+                    <div className="card-body">
+                        <h4>{comment.name}</h4>
+                        <p>{comment.body}</p>
+                    </div>
+                    <div className="card-footer">
+                        <p style={{ fontSize: "12px" }}>19th Feb 2024: 08 PM : {comment.id}</p>
+                    </div>
+                </div>
+            </div>)
+        })
+    );
+}
 export default Comments;
