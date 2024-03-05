@@ -1,29 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useForm } from 'react-hook-form';
 
+let rendercount = 0;
 const Info = () => {
-  const [count, setCount] = useState(0);
-  const [row, setRow] = useState([]);
-
-  useEffect(() => {
-    setRow((prevRow) => [...prevRow, <div key={count}> Test</div>]);
-
-  }, [count]);
-
-  const handlePush = () => setCount((prevCount) => prevCount + 1);
-
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  rendercount++;
+  console.log(errors);
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-12">{row}</div>
+    <form onSubmit={handleSubmit((data) => {
+      console.log(data);
+    })}>
+      <div className="alert alert-primary d-flex justify-content-center ">
+        render : {rendercount}
       </div>
-      <div className="row">
-        <div className="col-12">
-          <button onClick={handlePush} className="btn btn-outline-dark">
-            Push
-          </button>
+      <div className="form-group">
+        <div className="input-group">
+          <input
+            type="text"
+            {...register("email", { required: true })}
+          />
         </div>
       </div>
-    </div>
+      <div className="form-group">
+        <div className="input-group">
+          <input
+            type="text"
+            {...register("password", { required: true, minLength: 8 })}
+          />
+        </div>
+      </div>
+      <div className="form-group">
+        <div className="input-group">
+          <button className="btn btn-outline-dark" type="submit">submit</button>
+        </div>
+      </div>
+     
+    </form>
   );
 };
 

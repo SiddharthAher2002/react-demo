@@ -8,7 +8,7 @@ import FrontendLayout from './pages/layouts/FrontendLayout';
 import Menu from './pages/menu/';
 import Home from './pages/home/';
 import About from './pages/about/';
-import serviceComponents from './pages/services/';
+import ServicesRouter from './pages/services/';
 import Posts from './pages/posts/';
 import profileComponents from './pages/profile/';
 
@@ -23,9 +23,7 @@ function App() {
           <Route path="menu" element={<Menu />} />
           <Route path="posts" element={<Posts />} />
           <Route path='about' element={<About />} />
-          <Route path='services' element={<serviceComponents.Services />}>
-            <Route path='comments' element={<serviceComponents.Comments />}/>
-          </Route>
+          <Route path='services/*' element={<ServicesRouter />} />
         </Route>
 
         <Route path="/" element={<AuthLayout />}>
@@ -42,5 +40,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;

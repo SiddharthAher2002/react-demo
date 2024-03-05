@@ -11,25 +11,25 @@ function Login() {
         password: ''
     })
     const [error, setError] = useState('');
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('http://127.0.0.1:8000/api/v1/login', credentials)
             .then((res) => {
                 const userData = res.data;
-                if (userData.status=='401') {
+                if (userData.status == '401') {
                     setError(userData.error);
-                } else if(userData.status=='200') {
+                } else if (userData.status == '200') {
                     localStorage.setItem('user', JSON.stringify(userData.data));
                     localStorage.setItem('isLoggedIn', true);
                     setError('');
                     navigate("/profile/account");
-                }else{
+                } else {
                     setError(userData.error);
                 }
             })
             .catch((error) => {
-                if(error){
+                if (error) {
                     setError('Something went wrong! please try again later');
                 }
             });
@@ -44,58 +44,81 @@ function Login() {
                             <Link to="/">
                                 <img src="https://marketplace.canva.com/EAEyrxfbXiY/6/0/1600w/canva-brown-vintage-coffee-shop-logo-h09r2PsrZno.jpg" style={{ width: '100px' }} alt="Scanfcode" />
                             </Link>
-                            <h1>Login to your account</h1>
-
                             <form method="" action="">
-                                <div className="form-group">
-                                    <div className="input-group">
-                                        <span className="input-group-addon"><i className="fa fa-envelope ti-email"></i></span>
-                                        <input type="text" className="form-control" name="email" placeholder="Enter email"
-                                            value={credentials.email}
-                                            onChange={(e) => {
-                                                setCredentials({
-                                                    ...credentials,
-                                                    email: e.target.value
-                                                })
-                                            }}
-                                        />
+                                <div className="container p-5">
+                                    <h1>Login to your account</h1>
+
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <div className="form-group">
+                                                <div className="input-group">
+                                                    <span className="input-group-addon"><i className="fa fa-envelope ti-email"></i></span>
+                                                    <input type="text" className="form-control" name="email" placeholder="Enter email"
+                                                        value={credentials.email}
+                                                        onChange={(e) => {
+                                                            setCredentials({
+                                                                ...credentials,
+                                                                email: e.target.value
+                                                            })
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <hr className="hr-xs" />
-
-                                <div className="form-group">
-                                    <div className="input-group">
-                                        <span className="input-group-addon"><i className="fa fa-lock ti-unlock"></i></span>
-                                        <input type="password" className="form-control" name="password" placeholder="Enter password"
-                                            value={credentials.password}
-                                            onChange={(e) => {
-                                                setCredentials({
-                                                    ...credentials,
-                                                    password: e.target.value
-                                                })
-                                            }}
-                                        />
+                                    <hr className="hr-xs" />
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <div className="form-group">
+                                                <div className="input-group">
+                                                    <span className="input-group-addon"><i className="fa fa-lock ti-unlock"></i></span>
+                                                    <input type="password" className="form-control" name="password" placeholder="Enter password"
+                                                        value={credentials.password}
+                                                        onChange={(e) => {
+                                                            setCredentials({
+                                                                ...credentials,
+                                                                password: e.target.value
+                                                            })
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <button
-                                    className="btn btn-primary btn-block"
-                                    type="submit"
-                                    onClick={handleSubmit}
-                                >Sign in</button>
-
-                                <div className="form-group d-flex justify-content-between">
-                                    <a href="#"><h6>Forget Password</h6></a>
-                                    <Link to="/register"><h6>Resgister</h6></Link>
-                                </div>
-                                <span className="text-danger">{error}</span>
-                                <div className="login-footer">
-                                    <h6>Login with following options</h6>
-                                    <ul className="social-icons">
-                                        <li><a className="facebook" href="#"><i className="fa fa-facebook"></i></a></li>
-                                        <li><a className="twitter" href="#"><i className="fa fa-twitter"></i></a></li>
-                                    </ul>
+                                    <hr className="hr-xs" />
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <button
+                                                className="btn btn-primary btn-block"
+                                                type="submit"
+                                                onClick={handleSubmit}
+                                            >Sign in</button>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <div className="form-group d-flex justify-content-between">
+                                                <a href="#"><h6>Forget Password</h6></a>
+                                                <Link to="/register"><h6>Resgister</h6></Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <span className="text-danger">{error}</span>
+                                        </div>
+                                    </div>
+                                    <div className="row mt-3">
+                                        <div className="col-12">
+                                            <div className="login-footer">
+                                                <h6>Login with following options</h6>
+                                                <ul className="social-icons">
+                                                    <li><a className="facebook" href="#"><i className="fa fa-facebook"></i></a></li>
+                                                    <li><a className="twitter" href="#"><i className="fa fa-twitter"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
